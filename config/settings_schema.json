@@ -1,0 +1,10 @@
+[
+    {
+        "name": "theme_info",
+        "theme_name": "Emerald Theme",
+        "theme_version": "1.0.0",
+        "theme_author": "Emmanuel A Emerald",
+        "theme_documentation_url": "https://github.com/shopify/shopify-cli",
+        "theme_support_email": "emmaemerald064@gmail.com"
+    }
+]
