@@ -1,25 +1,33 @@
-<div class="relative bg-white" x-data="{ openMobileMenu: true }">
+<div class="relative bg-white" style="background-color: {{ section.settings.bg_color }};," x-data="{ openMobileMenu: true }">
     <div class="mx-auto px-4 sm:px-6">
-        <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-            <!-- shop name -->
+        <div class="flex justify-between items-center py-2 md:justify-start md:space-x-10">
+            <!-- shop name or logo -->
             <div class="flex justify-start lg:flex-1 truncate">
-                <h1 class="text-xl font-bold truncate">{{shop.name}}</h1>
+                <a href="{{ routes.root_url }}" class="flex items-center">
+                    {% if section.settings.logo != blank %}
+                    <img src="{{ section.settings.logo |  image_url: width: 100, height: 100 }}" alt="{{ shop.name }}"  width="100px" height="100px">
+                    {% else %}
+                    <h1 class="text-xl font-bold truncate">
+                        {{ section.settings.shop_title | default: shop.name }}
+                    </h1>
+                    {% endif %}
+                </a>
             </div>
             {% comment %} hamburger menu for mobile {% endcomment %}
             <div class="-mr-2 -my-2 ml-3 md:hidden">
-                <button x-on:click="openMobileMenu = true" type="button" class="bg-white p-2 inline-flex items-center justify-center focus:outline-none">
+                <button x-on:click="openMobileMenu = true" type="button" style="background-color: {{ section.settings.bg_color }};," class="bg-white p-2 inline-flex items-center justify-center focus:outline-none">
                     {% render 'hamburger' %}
                 </button>
             </div>
 
             <!-- NAVIGATION MENU ON DESKTOP -->
-            <nav x-data="{ active: null }" class="hidden md:flex space-x-5">
+            <nav x-data="{ active: null }" class="hidden md:flex space-x-5" >
                 {% for link in linklists.main-menu.links %}
                     {% assign link_handle = link.handle | replace: '-', '_' %}
                     
                     {% if link.links !=blank %}
-                        <div x-data="{ {{ link_handle }}: false }" class="relative">
-                            <button @click="active === '{{ link_handle }}' ? active = null : active = '{{ link_handle }}'" type="button" class="inline-flex items-center text-base text-gray-500 hover:text-gray-900">
+                        <div x-data="{ {{ link_handle }}: false }" class="relative" >
+                            <button @click="active === '{{ link_handle }}' ? active = null : active = '{{ link_handle }}'" type="button" class="inline-flex items-center text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">
                                 {{ link.title }}
                                 {% render 'dropdown-icon' %}
                             </button>
@@ -28,14 +36,14 @@
                             
                             <div x-show="active === '{{ link_handle }}'" @click.outside="active = null" class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                                 <div class="shadow-lg ring-black ring-opacity-5 overflow-hidden rounded-lg">
-                                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8" style="background-color: {{ section.settings.bg_color }};,">
 
                                         {% for dropdownLink in link.links %}
                                             
                                             <!-- CREATE THE SUBLINK -->
                                             <a href="{{ dropdownLink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
                                                 <div class="ml-4">
-                                                    <p class="text-gray-900 text-base font-medium">
+                                                    <p class="text-gray-900 text-base font-medium" style="color: {{ section.settings.text_color }}">
                                                         {{ dropdownLink.title }}
                                                     </p>
                                                 </div>
@@ -48,19 +56,19 @@
                             </div>
                         </div>
                     {% else %}
-                        <a href="{{ link.url }}" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
+                        <a href="{{ link.url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">{{ link.title }}</a>
                     {% endif %}
                 {% endfor %}
                 
             </nav>
 
             <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-                <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+                <a href="{{ routes.cart_url }}" class="whitespace-nowrap text-base  text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">
                     {% render 'shopping-bag' %}
                 </a>
 
-                <a href="{{ routes.login_url }}" class="text-base text-gray-500 hover:text-gray-900">Login</a>
-                <a href="{{ routes.register_url }}" class="text-base text-gray-500 hover:text-gray-900">Register</a>
+                <a href="{{ routes.login_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Login</a>
+                <a href="{{ routes.register_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Register</a>
             </div>
         </div>
     </div>
@@ -73,7 +81,16 @@
                 <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
                 <div class="flex items-center justify-between pb-3">
                     <div>
-                        <h1 class="text-lg text-gray-500 font-bold">{{shop.name}}</h1>
+                        <a href="{{ routes.root_url }}" class="flex items-center">
+                            {% if section.settings.logo != blank %}
+                            <img src="{{ section.settings.logo |  image_url: width: 100, height: 100 }}" alt="{{ shop.name }}" width="100px"
+                                height="100px">
+                            {% else %}
+                            <h1 class="text-xl font-bold truncate">
+                                {{ section.settings.shop_title | default: shop.name }}
+                            </h1>
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="-mr-2">
                         <button x-on:click="openMobileMenu = false" type="button" class="bg-white rounded-md p-2 text-gray-500">
@@ -122,3 +139,41 @@
 
     {% comment %} End of mobile menu layout {% endcomment %}
 </div>
+
+
+{% schema %}
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Upload Logo"
+            },
+            {
+                "type": "text",
+                "id": "shop_title",
+                "label": "Shop Title",
+                "default": "My Store"
+            },
+            {
+                "type": "color",
+                "id": "bg_color",
+                "label": "Background Color",
+                "default": "#ffffff"
+            },
+            {
+                "type": "color",
+                "id": "text_color",
+                "label": "Text Color",
+                "default": "#374151"
+            },
+            {
+                "type": "link_list",
+                "id": "menu",
+                "label": "Main Menu",
+                "default": "main-menu"
+            }
+        ]
+    }
+{% endschema %}
