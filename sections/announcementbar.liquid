@@ -1,0 +1,106 @@
+{% if section.blocks.size > 0 %}
+
+<div x-data="{
+    active: 0,
+    total: {{ section.blocks.size }},
+    interval: null,
+    start() {
+      if (this.total > 1) {
+        this.interval = setInterval(() => {
+          this.active = (this.active + 1) % this.total
+        }, {{ section.settings.slide_speed }})
+      }
+    }
+  }" x-init="start()" class="w-full text-center"
+    style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+    <div class="relative overflow-hidden py-2 transition-transform duration-500 ease-in-out">
+        
+
+        {% for block in section.blocks %}
+        <div x-show="active === {{ forloop.index0 }}" x-transition class="flex items-center justify-center gap-2">
+            {% if block.settings.icon != blank %}
+            <img src="{{ block.settings.icon |  image_url: width: 40, height: 40 }}" class="h-5 w-5" alt="icon" width="40px" height="40px">
+            {% endif %}
+
+            <p class="text-sm font-medium">
+                {{ block.settings.text }}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% else %}
+
+<!-- default text -->
+<div class="w-full text-center py-2"
+    style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+    <p class="text-sm font-medium">
+        Welcome to our store
+    </p>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#111827"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "slide_speed",
+      "label": "Slide Speed (ms)",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "default": 4000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Announcement Text",
+          "default": "Free shipping on all orders!"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "blocks": [
+        {
+          "type": "announcement"
+        },
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
