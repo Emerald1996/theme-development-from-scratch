@@ -1,4 +1,5 @@
 <div class="relative bg-white" style="background-color: {{ section.settings.bg_color }};," x-data="{ openMobileMenu: true }">
+   
     <div class="mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-center py-2 md:justify-start md:space-x-10">
             <!-- shop name or logo -->
@@ -67,8 +68,11 @@
                     {% render 'shopping-bag' %}
                 </a>
 
-                <a href="{{ routes.login_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Login</a>
-                <a href="{{ routes.register_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Register</a>
+                {% if shop.customer_accounts_enabled %}
+                    
+                    <a href="{{ routes.login_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Login</a>
+                    <a href="{{ routes.register_url }}" class="text-base text-gray-500 hover:text-gray-900" style="color: {{ section.settings.text_color }}">Register</a>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,3 +1,15 @@
+<style>
+
+  @keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+</style>
+
 {% if section.blocks.size > 0 %}
 
 <div x-data="{
@@ -16,17 +28,28 @@
     <div class="relative overflow-hidden py-2 transition-transform duration-500 ease-in-out">
         
 
-        {% for block in section.blocks %}
-        <div x-show="active === {{ forloop.index0 }}" x-transition class="flex items-center justify-center gap-2">
+      <div class="overflow-hidden whitespace-nowrap py-2">
+        <div class="animate-marquee flex gap-10">
+      
+          {% for block in section.blocks %}
+          <div class="flex items-center gap-2">
             {% if block.settings.icon != blank %}
-            <img src="{{ block.settings.icon |  image_url: width: 40, height: 40 }}" class="h-5 w-5" alt="icon" width="40px" height="40px">
+            <img src="{{ block.settings.icon |  image_url: width: 40, height: 40 }}" class="h-5 w-5" alt="icon" width="40px"
+              height="40px">
             {% endif %}
-
-            <p class="text-sm font-medium">
-                {{ block.settings.text }}
-            </p>
+            <span>{{ block.settings.text }}</span>
+          </div>
+          {% endfor %}
+      
+          <!-- duplicate for seamless loop -->
+          {% for block in section.blocks %}
+          <div class="flex items-center gap-2">
+            <span>{{ block.settings.text }}</span>
+          </div>
+          {% endfor %}
+      
         </div>
-        {% endfor %}
+      </div>
 
     </div>
 </div>
