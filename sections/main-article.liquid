@@ -1,1 +1,27 @@
-<h1>{{ article.title }}</h1>
+<div class="max-w-3xl mx-auto px-4 py-12">
+
+    <!-- Title -->
+    <h1 class="text-3xl font-bold mb-4">
+        {{ article.title }}
+    </h1>
+
+    <!-- Meta -->
+    <div class="text-sm text-gray-500 mb-6">
+        <span>{{ article.published_at | date: "%B %d, %Y" }}</span>
+        {% if article.author %}
+        <span> • {{ article.author }}</span>
+        {% endif %}
+    </div>
+
+    <!-- Featured Image -->
+    {% if article.image %}
+    <img src="{{ article.image | image_url: width: 100, height: 500 }}" alt="{{ article.title }}" width="100%"
+        height="400px" class="w-full  mb-6">
+    {% endif %}
+
+    <!-- Content -->
+    <div class="prose max-w-none">
+        {{ article.content }}
+    </div>
+
+</div>
