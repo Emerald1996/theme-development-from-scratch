@@ -1,27 +1,87 @@
 <div class="max-w-3xl mx-auto px-4 py-12">
 
-    <!-- Title -->
-    <h1 class="text-3xl font-bold mb-4">
-        {{ article.title }}
-    </h1>
+    {% for block in section.blocks %}
+        {% case block.type %}
 
-    <!-- Meta -->
-    <div class="text-sm text-gray-500 mb-6">
-        <span>{{ article.published_at | date: "%B %d, %Y" }}</span>
-        {% if article.author %}
-        <span> • {{ article.author }}</span>
-        {% endif %}
-    </div>
+            {% when 'article_title' %}
+            <h1 class="text-3xl font-bold mb-4" {{ block.shopify_attributes }}>
+                {{ article.title }}
+            </h1>
 
-    <!-- Featured Image -->
-    {% if article.image %}
-    <img src="{{ article.image | image_url: width: 100, height: 500 }}" alt="{{ article.title }}" width="100%"
-        height="400px" class="w-full  mb-6">
-    {% endif %}
+            {% when 'article_author' %}
+            {% if section.settings.show_author and article.author %}
+            <div class="text-sm text-gray-500 mb-2" {{ block.shopify_attributes }}>
+                {{ article.author }}
+            </div>
+            {% endif %}
 
-    <!-- Content -->
-    <div class="prose max-w-none">
-        {{ article.content }}
-    </div>
+            {% when 'article_date' %}
+            {% if section.settings.show_date %}
+            <div class="text-sm text-gray-500 mb-4" {{ block.shopify_attributes }}>
+                {{ article.published_at | date: "%B %d, %Y" }}
+            </div>
+            {% endif %}
+
+            {% when 'article_image' %}
+            {% if article.image %}
+            <img src="{{ article.image | image_url: width: 100, height: 500 }}" alt="{{ article.title }}" width="100%"
+                height="400px" class="w-full  mb-6">
+            {% endif %}
+
+            {% when 'article_content' %}
+            <div class="prose max-w-none" {{ block.shopify_attributes }}>
+                {{ article.content }}
+            </div>
+
+        {% endcase %}
+    {% endfor %}
 
 </div>
+
+
+{% schema %}
+  {
+    "name": "main article",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "show date",
+            "default": true
+        }
+    ],
+    "blocks": [
+        {
+            "type": "article_title",
+            "name": "article title",
+            "limit": 1,
+        },
+        {
+            "type": "article_author",
+            "name": "article author",
+            "limit": 1,
+        },
+        {
+            "type": "article_date",
+            "name": "article date",
+            "limit": 1,
+        },
+        {
+            "type": "article_image",
+            "name": "article image",
+            "limit": 1,
+        },
+        {
+            "type": "article_content",
+            "name": "article content",
+            "limit": 1,
+        }
+    ]
+  }
+{% endschema %}
