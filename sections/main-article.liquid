@@ -4,29 +4,35 @@
         {% case block.type %}
 
             {% when 'article_title' %}
-            <h1 class="text-3xl font-bold mb-4" {{ block.shopify_attributes }}>
+            <h1 class="text-center text-3xl font-bold mb-4" {{ block.shopify_attributes }}>
                 {{ article.title }}
             </h1>
 
             {% when 'article_author' %}
             {% if section.settings.show_author and article.author %}
-            <div class="text-sm text-gray-500 mb-2" {{ block.shopify_attributes }}>
+            <div class="text-center text-sm text-gray-500 mb-2" {{ block.shopify_attributes }}>
                 {{ article.author }}
             </div>
             {% endif %}
 
             {% when 'article_date' %}
             {% if section.settings.show_date %}
-            <div class="text-sm text-gray-500 mb-4" {{ block.shopify_attributes }}>
+            <div class="text-center text-sm text-gray-500 mb-4" {{ block.shopify_attributes }}>
                 {{ article.published_at | date: "%B %d, %Y" }}
             </div>
             {% endif %}
 
             {% when 'article_image' %}
-            {% if article.image %}
-            <img src="{{ article.image | image_url: width: 100, height: 500 }}" alt="{{ article.title }}" width="100%"
-                height="400px" class="w-full  mb-6">
-            {% endif %}
+                <div class="max-w-7xl bg-blue rounded-lg shadow-md overflow-hidden mb-6 my-4">
+
+                    {% if article.image %}
+                    <img src="{{ article.image | image_url: width: 100}}" alt="{{ article.title }}" width="100%"
+                        height="100px" {{ block.shopify_attributes }} class="w-full h-80 object-center object-cover">
+                        {% else %}
+                            {% assign placeholder_image =  'lifestyle-2'%}
+                            {{ placeholder_image | placeholder_svg_tag:"w-full h-80 object-center object-cover" }}
+                    {% endif %}
+                </div>
 
             {% when 'article_content' %}
             <div class="prose max-w-none" {{ block.shopify_attributes }}>
