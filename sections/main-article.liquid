@@ -1,29 +1,31 @@
-<div class="max-w-3xl mx-auto px-4 py-12">
+<div class="max-w-3xl mx-auto px-4 py-12" itemscope itemtype="http://schema.org/BlogPosting">
 
     {% for block in section.blocks %}
         {% case block.type %}
 
             {% when 'article_title' %}
-            <h1 class="text-center text-3xl font-bold mb-4" {{ block.shopify_attributes }}>
+            <h1 class="text-center text-3xl font-bold mb-4" {{ block.shopify_attributes }} itemprop="headline">
                 {{ article.title }}
             </h1>
 
             {% when 'article_author' %}
             {% if section.settings.show_author and article.author %}
-            <div class="text-center text-sm text-gray-500 mb-2" {{ block.shopify_attributes }}>
-                {{ article.author }}
+            <div class="text-center text-sm text-gray-500 mb-2" {{ block.shopify_attributes }} itemscope itemtype="http://schema.org/Person">
+                <small itemprop="author">{{ article.author }}</small>
             </div>
             {% endif %}
 
             {% when 'article_date' %}
             {% if section.settings.show_date %}
             <div class="text-center text-sm text-gray-500 mb-4" {{ block.shopify_attributes }}>
-                {{ article.published_at | date: "%B %d, %Y" }}
+                <time datetime="{{ article.published_at | date: "%Y-%m-%d" }}" itemprop="datePublished dateCreated">
+                    {{ article.published_at | date: "%B %d, %Y" }}
+                </time>
             </div>
             {% endif %}
 
             {% when 'article_image' %}
-                <div class="max-w-7xl bg-blue rounded-lg shadow-md overflow-hidden mb-6 my-4">
+                <div class="max-w-7xl bg-blue rounded-lg shadow-md overflow-hidden mb-6 my-4" itemprop="image">
 
                     {% if article.image %}
                     <img src="{{ article.image | image_url: width: 100}}" alt="{{ article.title }}" width="100%"
@@ -35,7 +37,7 @@
                 </div>
 
             {% when 'article_content' %}
-            <div class="prose max-w-none" {{ block.shopify_attributes }}>
+            <div class="prose max-w-none" {{ block.shopify_attributes }} itemprop="articleBody">
                 {{ article.content }}
             </div>
 
