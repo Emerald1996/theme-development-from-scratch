@@ -144,6 +144,45 @@
 </div>
 {% endif %}
 
+// using the json structured data to help search engine understand the content of the page better, and improve SEO instead of relying on the micro structured data which is less detailed and less accurate.
+//copy the full html page source code and test it with google structured data testing tool like rich results test to see the result and make sure there is no error in the structured data. you can also use the google search console to see if there is any error in the structured data and fix it accordingly.
+<script type="application/ld+json">
+{
+    
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ article.title |  json }}",
+    "articleBody": "{{ article.content | strip_html | json }}",
+    {%  if article.excerpt != blank %} 
+     "description": "{{ article.excerpt |  json }}"
+    {% endif %}
+    {% if article.image != blank %}
+    "image": [
+        "{{ article.image | image_url:'medium' | prepend:'https:' | json }}"
+    ]
+    {% endif %}
+    "datePublished": "{{ article.published_at | date: "%Y-%m-%d" | json }}",
+    "dateCreated": "{{ article.created_at | date: "%Y-%m-%d" | json }}",
+    {% if article.author != blank %}
+    "author": {
+        "@type": "Person",
+        "name": "{{ article.author | json }}"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "{{ shop.name | json }}",
+        {% if shop.logo != blank %}
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ shop.logo | image_url:'medium' | prepend:'https:' | json }}"
+        }
+        {% endif %}
+    }
+    {% endif %}
+}
+
+</script>
+
 
 {% schema %}
   {
