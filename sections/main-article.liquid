@@ -166,24 +166,16 @@
     {% endif %}
     "datePublished": "{{ article.published_at | date: "%Y-%m-%d" | json }}",
     "dateCreated": "{{ article.created_at | date: "%Y-%m-%d" | json }}",
-    {% if article.author != blank %}
     "author": {
         "@type": "Person",
         "name": "{{ article.author | json }}"
     },
     "publisher": {
         "@type": "Organization",
-        "name": "{{ shop.name | json }}",
-        {% if shop.logo != blank %}
-        "logo": {
-            "@type": "ImageObject",
-            "url": "{{ shop.logo | image_url:'medium' | prepend:'https:' | json }}"
-        }
-        {% endif %}
+        "name": "{{ shop.name | json }}"
+        
     }
-    {% endif %}
 }
-
 </script>
 
 
