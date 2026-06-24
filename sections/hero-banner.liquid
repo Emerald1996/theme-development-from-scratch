@@ -1,0 +1,120 @@
+<section
+  class="relative min-h-[700px] flex items-center justify-center"
+  style="
+    background-image:url('{{ section.settings.banner | image_url: width: 1500 }}');
+    background-size:cover;
+    background-position:center;
+  "
+>
+
+  <div
+    class="absolute inset-0"
+    style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+  ></div>
+
+  <div class="relative z-10 text-center max-w-4xl px-6">
+
+    <h1
+      class="font-bold text-white leading-tight"
+      style="font-size: {{ section.settings.heading_size }}px;"
+    >
+      {{ section.settings.heading }}
+    </h1>
+
+    <p
+      class="text-white mt-6 text-lg"
+    >
+      {{ section.settings.subheading }}
+    </p>
+
+    <a
+      href="{{ section.settings.button_link }}"
+      class="inline-block mt-8 px-8 py-4 rounded-lg font-semibold transition hover:scale-105"
+      style="
+        background: {{ section.settings.button_bg }};
+        color: {{ section.settings.button_text }};
+      "
+    >
+      {{ section.settings.button_label }}
+    </a>
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name":"Hero Banner",
+  "settings":[
+    {
+      "type":"image_picker",
+      "id":"banner",
+      "label":"Banner Image"
+    },
+    {
+      "type":"text",
+      "id":"heading",
+      "default":"Emerald Footwear achme tested and trusted",
+      "label":"Heading"
+    },
+    {
+      "type":"textarea",
+      "id":"subheading",
+      "default":"Premium footwear built for performance and style.",
+      "label":"Subheading"
+    },
+    {
+      "type":"range",
+      "id":"heading_size",
+      "min":32,
+      "max":96,
+      "step":4,
+      "default":64,
+      "label":"Heading Size"
+    },
+    {
+      "type":"color",
+      "id":"overlay_color",
+      "default":"#000000",
+      "label":"Overlay Color"
+    },
+    {
+      "type":"range",
+      "id":"overlay_opacity",
+      "min":0,
+      "max":100,
+      "step":5,
+      "default":50,
+      "label":"Overlay Opacity"
+    },
+    {
+      "type":"text",
+      "id":"button_label",
+      "default":"Shop All",
+      "label":"Button Text"
+    },
+    {
+      "type":"url",
+      "id":"button_link",
+      "label":"Button Link"
+    },
+    {
+      "type":"color",
+      "id":"button_bg",
+      "default":"#000000",
+      "label":"Button Background"
+    },
+    {
+      "type":"color",
+      "id":"button_text",
+      "default":"#ffffff",
+      "label":"Button Text Color"
+    }
+  ],
+  "presets":[
+    {
+      "name":"Hero Banner"
+    }
+  ]
+}
+{% endschema %}
