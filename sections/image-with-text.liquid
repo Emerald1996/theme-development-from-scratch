@@ -1,0 +1,111 @@
+<section class="py-20 my-8">
+
+  <div class="max-w-7xl mx-auto px-6">
+
+      <div>
+          <h2 class="font-bold mb-6 text-center" style=" color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px;">
+              {{ section.settings.mainheading }}
+          </h2>
+      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+
+      <!-- Image -->
+      <div>
+
+        {% if section.settings.image %}
+          <img
+            src="{{ section.settings.image | image_url: width: 800 }}"
+            alt="{{ section.settings.heading | escape }}"
+            class="w-full h-[450px] object-cover rounded-xl shadow-lg"
+            loading="lazy"
+            width="800"
+            height="450"
+          >
+        {% else %}
+          <div class="w-full h-[450px] bg-gray-100 rounded-xl flex items-center justify-center shadow-lg">
+            {{ 'image' | placeholder_svg_tag: 'w-40 h-40 text-gray-400' }}
+          </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Content -->
+      <div>
+
+        <h2 class="font-bold mb-6"style=" color: {{ section.settings.heading_color }}; font-size: {{ section.settings.heading_size }}px;">
+          {{ section.settings.heading }}
+        </h2>
+
+        <div
+          class="leading-8"
+          style="color: {{ section.settings.text_color }};"
+        >
+          {{ section.settings.text }}
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Image With Text",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "mainheading",
+      "default": "About Us",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Built For Champions",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "default": 48,
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Size"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Content",
+      "default": "<p>Tell your customers about your brand, your products, or your story.</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#111111",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#6B7280",
+      "label": "Text Color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image With Text"
+    }
+  ]
+}
+{% endschema %}
