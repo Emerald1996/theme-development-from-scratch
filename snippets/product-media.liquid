@@ -1,0 +1,29 @@
+{% comment %} {% for media in product.media %}
+  {% if media.media_type == 'external_video' %}
+    {% if media.host == 'youtube' %}
+      {{ media | external_video_url: color: 'white' | external_video_tag }}
+    {% elsif media.host == 'vimeo' %}
+      {{ media | external_video_url: loop: '1', muted: '1' | external_video_tag }}
+    {% endif %}
+  {% endif %}
+{% endfor %} {% endcomment %}
+
+{% case media.media_type %}
+    {% when 'image' %}
+        <img src="{{ media | img_url: 'large' }}" alt="{{ media.preview_image.alt }}" width="" height="" class="w-full h-full object-cover">
+    
+    {% when 'external_video' %}
+        {{ media | external_video_tag: class: 'w-full h-80 object-cover' }}
+
+    {% when 'video' %}
+        {{ media | video_tag: controls: true, class: 'w-full h-full object-cover' }}
+
+    {% when 'model' %}
+        {{ media | model_viewer_tag }}
+
+    {% else %}
+        {{ media | media_tag }}
+    
+    {% else %}
+        
+{% endcase %}

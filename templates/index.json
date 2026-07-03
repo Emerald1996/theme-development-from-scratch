@@ -22,11 +22,15 @@
     },
     "story": {
       "type": "image-with-text"
+    },
+    "marquee-logo": {
+      "type": "marquee-logo"
     }
   },
   "order": [
     "hero",
     "featured-collection",
-    "story"
+    "story",
+    "marquee-logo"
   ]
 }

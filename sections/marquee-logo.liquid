@@ -1,0 +1,227 @@
+<section
+  class="py-12 overflow-hidden"
+  style="background-color: {{ section.settings.background_color }};"
+>
+
+  {% if section.settings.heading != blank %}
+    <div class="max-w-7xl mx-auto px-6 mb-8">
+      <h2
+        class="text-center font-bold"
+        style="
+          color: {{ section.settings.heading_color }};
+          font-size: {{ section.settings.heading_size }}px;
+        "
+      >
+        {{ section.settings.heading }}
+      </h2>
+    </div>
+  {% endif %}
+
+
+  {% liquid
+  assign has_logo = false
+
+  for block in section.blocks
+    if block.settings.logo != blank
+      assign has_logo = true
+      break
+    endif
+  endfor
+%}
+
+  <div class="marquee">
+
+    <div class="marquee__content" style="animation-duration: {{ section.settings.speed }}s;">
+    
+        {% if has_logo %}
+    
+            {% for block in section.blocks %}
+                {% if block.settings.logo != blank %}
+                    <div class="logo-item" {{ block.shopify_attributes }}>
+                        <img src="{{ block.settings.logo | image_url: width: 250 }}" alt="Brand Logo" loading="lazy" width="180"
+                            height="80">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        
+            {% comment %} Duplicate for infinite loop {% endcomment %}
+        
+            {% for block in section.blocks %}
+                {% if block.settings.logo != blank %}
+                    <div class="logo-item">
+                        <img src="{{ block.settings.logo | image_url: width: 250 }}" alt="Brand Logo" loading="lazy" width="180"
+                            height="80">
+                    </div>
+                {% endif %}
+            {% endfor %}
+        
+            {% else %}
+        
+            {% for i in (1..10) %}
+                <div class="logo-item placeholder-logo" >
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-logo' }}
+                </div>
+            {% endfor %}
+        
+            {% for i in (1..10) %}
+                <div class="logo-item placeholder-logo">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-logo' }}
+                </div>
+            {% endfor %}
+    
+        {% endif %}
+    
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+
+    .marquee{
+        overflow:hidden;
+        width:100%;
+    }
+
+    .marquee__content{
+        display:flex;
+        align-items:center;
+        gap:70px;
+        width:max-content;
+        animation:scroll linear infinite;
+    }
+
+    .logo-item{
+        flex-shrink:0;
+    }
+
+    .logo-item img{
+        height:55px;
+        width:auto;
+        object-fit:contain;
+        transition:.3s;
+    }
+
+    {% if section.settings.grayscale %}
+    .logo-item img{
+        filter:grayscale(100%);
+        opacity:.7;
+    }
+
+    .logo-item img:hover{
+        filter:none;
+        opacity:1;
+    }
+    {% endif %}
+
+    @keyframes scroll{
+
+        from{
+            transform:translateX(0);
+        }
+
+        to{
+            transform:translateX(-50%);
+        }
+
+    }
+    .placeholder-logo{
+        width: 200px;
+        height:200px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .placeholder-svg{
+        width:200px;
+        height:200px;
+        opacity:.45;
+        color:#9CA3AF;
+    }
+
+</style>
+
+{% schema %}
+{
+  "name": "Logo Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted By Leading Brands"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#111827"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed (seconds)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Enable grayscale effect",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Logo Marquee",
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
