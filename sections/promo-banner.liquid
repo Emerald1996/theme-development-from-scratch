@@ -28,7 +28,7 @@
   ></div>
 
   <!-- Content -->
-  <div class="relative h-full max-w-7xl mx-auto px-6 flex items-center {{ section.settings.vertical_alignment }}">
+  <div class="relative h-full max-w-7xl mx-auto px-6 flex items-center {{ section.settings.horizontal_alignment }}">
 
     <div
       class="{{ section.settings.text_alignment }}"
@@ -186,13 +186,13 @@
     },
     {
       "type": "select",
-      "id": "vertical_alignment",
-      "label": "Vertical Alignment",
+      "id": "horizontal_alignment",
+      "label": "Horizontal Alignment",
       "default": "justify-start",
       "options": [
-        { "value": "justify-start", "label": "Top" },
+        { "value": "justify-start", "label": "Left" },
         { "value": "justify-center", "label": "Center" },
-        { "value": "justify-end", "label": "Bottom" }
+        { "value": "justify-end", "label": "Right" }
       ]
     }
   ],
