@@ -13,7 +13,7 @@
             </h2>
 
             {% if section.settings.subheading != blank %}
-            <p class="mt-4 text-gray-500">
+            <p class="mt-4 text-gray-500" style="color: {{section.settings.subheading_color}};">
                 {{ section.settings.subheading }}
             </p>
             {% endif %}
@@ -106,6 +106,12 @@
       "id": "subheading",
       "default": "Tag us for a chance to be featured.",
       "label": "Subheading"
+    },
+    {
+        "type": "color",
+        "id": "subheading_color",
+        "default": "#111827",
+        "label": "Subheading Color"
     },
     {
       "type": "range",
