@@ -28,6 +28,9 @@
     },
     "promo-banner": {
       "type": "promo-banner"
+    },
+    "instagram-gallery": {
+      "type": "instagram-gallery"
     }
   },
   "order": [
@@ -35,6 +38,7 @@
     "featured-collection",
     "story",
     "marquee-logo",
-    "promo-banner"
+    "promo-banner",
+    "instagram-gallery"
   ]
 }
