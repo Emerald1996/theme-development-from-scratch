@@ -1,0 +1,205 @@
+<section
+  class="relative overflow-hidden"
+  style="height: {{ section.settings.banner_height }}px;"
+>
+
+  {% if section.settings.image %}
+    <img
+      src="{{ section.settings.image | image_url: width: 2000 }}"
+      alt="{{ section.settings.heading | escape }}"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="lazy"
+      width="2000"
+      height="{{ section.settings.banner_height }}"
+    >
+  {% else %}
+    <div class="absolute inset-0 bg-gray-100 flex items-center justify-center">
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'w-48 h-48 text-gray-300' }}
+    </div>
+  {% endif %}
+
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0"
+    style="
+      background: {{ section.settings.overlay_color }};
+      opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    "
+  ></div>
+
+  <!-- Content -->
+  <div class="relative h-full max-w-7xl mx-auto px-6 flex items-center {{ section.settings.vertical_alignment }}">
+
+    <div
+      class="{{ section.settings.text_alignment }}"
+      style="max-width: {{ section.settings.content_width }}px;"
+    >
+
+      {% if section.settings.heading != blank %}
+        <h2
+          class="font-bold leading-tight"
+          style="
+            color: {{ section.settings.heading_color }};
+            font-size: {{ section.settings.heading_size }}px;
+          "
+        >
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div
+          class="mt-6 text-lg"
+          style="color: {{ section.settings.text_color }};"
+        >
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="inline-block mt-8 px-8 py-4 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+          style="
+            background: {{ section.settings.button_bg }};
+            color: {{ section.settings.button_color }};
+          "
+        >
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Promotional Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "label": "Banner Height",
+      "min": 300,
+      "max": 900,
+      "step": 50,
+      "default": 500
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Summer Collection",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "default": 54
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Content",
+      "default": "<p>Discover lightweight footwear engineered for everyday comfort.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Collection",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "default": "#000000",
+      "label": "Button Background"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "default": "#ffffff",
+      "label": "Button Text"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#ffffff",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#ffffff",
+      "label": "Text Color"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "default": "#000000",
+      "label": "Overlay Color"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "default": 600
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "text-left",
+      "options": [
+        { "value": "text-left", "label": "Left" },
+        { "value": "text-center", "label": "Center" },
+        { "value": "text-right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical Alignment",
+      "default": "justify-start",
+      "options": [
+        { "value": "justify-start", "label": "Top" },
+        { "value": "justify-center", "label": "Center" },
+        { "value": "justify-end", "label": "Bottom" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Banner"
+    }
+  ]
+}
+{% endschema %}

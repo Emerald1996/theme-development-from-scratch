@@ -25,12 +25,16 @@
     },
     "marquee-logo": {
       "type": "marquee-logo"
+    },
+    "promo-banner": {
+      "type": "promo-banner"
     }
   },
   "order": [
     "hero",
     "featured-collection",
     "story",
-    "marquee-logo"
+    "marquee-logo",
+    "promo-banner"
   ]
 }
