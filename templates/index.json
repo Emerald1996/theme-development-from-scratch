@@ -31,6 +31,9 @@
     },
     "instagram-gallery": {
       "type": "instagram-gallery"
+    },
+    "testimonials": {
+      "type": "testimonials"
     }
   },
   "order": [
@@ -39,6 +42,7 @@
     "story",
     "marquee-logo",
     "promo-banner",
-    "instagram-gallery"
+    "instagram-gallery",
+    "testimonials"
   ]
 }
