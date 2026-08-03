@@ -1,7 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
 <style>
     .testimonial-card {
 
@@ -254,7 +250,7 @@
 
                             {% if block.settings.image %}
 
-                            <img src="{{ block.settings.image | image_url: width:120 }}" class="customer-avatar"
+                            <img src="{{ block.settings.image | image_url: width:120 }}" width="" height="" class="customer-avatar"
                                 alt="{{ block.settings.name }}" loading="lazy">
 
                             {% else %}

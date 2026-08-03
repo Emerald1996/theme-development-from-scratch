@@ -1,7 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-
  <style>
     .swiper-button-prev,
     .swiper-button-next {
@@ -40,7 +36,7 @@
             </div>
 
             <div class="md:hidden">
-                <div class="swiper h-94">
+                <div class="swiper product-swiper h-94">
                     <div class="swiper-wrapper">
                         {% for media in product.media %}
                         <div class="swiper-slide">
@@ -51,10 +47,11 @@
                         {% endfor %}
                     </div>
 
-                    <div class="swiper-pagination"></div>
-
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-pagination product-pagination"></div>
+                    
+                    <div class="swiper-button-prev product-prev"></div>
+                    
+                    <div class="swiper-button-next product-next"></div>
                 </div>
             </div>
         </div>
@@ -134,16 +131,34 @@
 
 
 <script>
-    const swiper = new Swiper('.swiper', {
-        direction: 'horizontal',
+    function initProductSwiper() {
 
-        pagination: {
-            el: '.swiper-pagination'
-        },
+        const slider = document.querySelector(".product-swiper");
 
-        navigation: {
-            prevEl: '.swiper-button-prev',
-            nextEl: '.swiper-button-next'
+        if (!slider || typeof Swiper === "undefined") return;
+
+        if (slider.swiper) {
+            slider.swiper.destroy(true, true);
         }
-    })
+
+        new Swiper(slider, {
+            loop: true,
+
+            pagination: {
+                el: ".product-pagination",
+                clickable: true
+            },
+
+            navigation: {
+                nextEl: ".product-next",
+                prevEl: ".product-prev"
+            }
+        });
+    }
+
+    // Storefront
+    window.addEventListener("load", initProductSwiper);
+
+    // Theme Editor
+    document.addEventListener("shopify:section:load", initProductSwiper);
 </script>
