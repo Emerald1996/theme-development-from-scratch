@@ -59,9 +59,9 @@
         <div class="product--information sticky top-5 p-2">
             {% form 'product', product %}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <div class="my-3">
+            {% comment %} <div class="my-3">
                 <span class="text-xs text-gray-500">{{ product.vendor }}</span>
-            </div>
+            </div> {% endcomment %}
 
             <div class="my-3">
                 <h1 class="text-3xl text-gray-900">{{ product.title }}</h1>
